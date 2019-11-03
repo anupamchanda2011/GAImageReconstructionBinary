@@ -58,18 +58,25 @@ def matingPool(population, selectionResults):
     return matingpool
 
 def breed(parent1, parent2):
+    child1 = []
+    child2 = []
     child = []
-    mutationIndex1 = random.randrange(0,len(patent1));
-    mutationIndex2 = random.randrange(mutationIndex1,len(patent1));
+    mutationIndex1 = random.randrange(0,len(parent1));
+    mutationIndex2 = random.randrange(mutationIndex1,len(parent2));
 
     for i in range(0, mutationIndex1):
-    	child.append(parent1[i]);
+        child1.append(parent1[i])
+        child2.append(parent2[i])
 
     for i in range(mutationIndex1,mutationIndex2):
-    	child.append(parent2[i]);	
+        child1.append(parent2[i])
+        child2.append(parent1[i])
         
-    for i in range(mutationIndex2,len(patent2)):
-    	child.append(parent2[i]);	
+    for i in range(mutationIndex2,len(parent2)):
+        child1.append(parent1[i])
+        child2.append(parent2[i])
+    child.append(child1)
+    child.append(child2)
     return child
 
 def breedPopulation(matingpool, eliteSize):
@@ -78,12 +85,12 @@ def breedPopulation(matingpool, eliteSize):
     pool = random.sample(matingpool, len(matingpool))
 
     for i in range(0,eliteSize):
-    	children.append(matingpool[i])
-    	
+        children.append(matingpool[i])
+        
     for i in range(0, length):
-    	child = breed(pool[i], pool[len(matingpool)-i-1])
-    	children.append(child)
-    return children	
+        child = breed(pool[i], pool[len(matingpool)-i-1])
+        children.append(child)
+    return children
 
 def mutate(individual, mutationRate):
 
@@ -94,8 +101,8 @@ def mutate(individual, mutationRate):
 def mutatePopulation(population, mutationRate):
     mutatedPop = []
     for ind in range(0, len(population)):
-    	mutatedInd = mutate(population[ind], mutationRate)
-    	mutatedPop.append(mutatedInd)
+        mutatedInd = mutate(population[ind], mutationRate)
+        mutatedPop.append(mutatedInd)
     return mutatedPop
     
 def getmax(a,b):
@@ -177,9 +184,15 @@ def geneticAlgorithm(constant, popSize, k,eliteSize, mutationRate, generations,o
     bestRoute = currentGen[0]
 
     return bestRoute
-    
-    img = io.imread('test1.png',as_gray=True) 
-    img = resize(img,(215,215))
+
+
+
+    img = io.imread('test1.jpg',as_gray=True) 
+    [row,col] = img.shape
+    mrow = row - (row%5)
+    mcol = col - (col%5)
+    img = resize(img,(mrow,mcol))
+    print(img.shape)
     array = np.array(img)
     array[array < 1] = 0;
     array[array >= 1] = 1;
@@ -195,7 +208,7 @@ def geneticAlgorithm(constant, popSize, k,eliteSize, mutationRate, generations,o
     size = len(arr)
     #mproblem = Equation(arr)
     myarr = geneticAlgorithm(constant = 2,popSize = 100,k=size,eliteSize = 100,mutationRate = 0.1,
-       generations = 2000,orgImage = arr )
+       generations = 3500,orgImage = arr )
     print(myarr)
 #   myarr = mproblem.getParams()
 #   currentGen = initialPopulation(10, size,2)
@@ -207,4 +220,3 @@ def geneticAlgorithm(constant, popSize, k,eliteSize, mutationRate, generations,o
     resarr[resarr > 0] = 255 
     img = Image.fromarray(resarr)
     img.show()
-    
