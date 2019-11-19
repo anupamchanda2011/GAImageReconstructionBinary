@@ -1,5 +1,6 @@
 # GAImageReconstruction
-We have implemented a GA application which can be used to regenerate images. Currently our application works for binary images.You can use our GA componets(like crossover,mutation,selection) for other GA appplications. 
+We have implemented a Genetic Algorithm that can be used for image regeneration. Our algorithm takes an image as input and
+approximates the image using its components.Our algo works for diffrent dimensions and gray scale values.Intermediate results are also available form our algorithm.We have implemented our genetic algorithm code in such a way that our GA components(crossover,mutation,selection) can be used in other GA applications.
 
 # Language and Tools
 Python,Jupyter Notebook
